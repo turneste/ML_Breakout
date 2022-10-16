@@ -17,6 +17,9 @@ jobs:
           - editmode
     steps:
       # Cache Large Files
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
