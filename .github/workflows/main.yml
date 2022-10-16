@@ -2,6 +2,9 @@ name: Test ML Breakout
 
 on: push
 
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
 jobs:
   checkLicense:
     name: Check for license
