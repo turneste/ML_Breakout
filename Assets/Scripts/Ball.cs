@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -7,6 +8,8 @@ public class Ball : MonoBehaviour
     public new Rigidbody2D rigidbody { get; private set; }
     public float speed = 10f;
 
+    int score = 0;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -14,18 +17,32 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        ResetBall();
+        StartCoroutine(ResetBall());
     }
 
     /// <summary>
     /// Places ball at starting positions and sets random trajectory
     /// </summary>
-    public void ResetBall()
+    private IEnumerator ResetBall()
     {
         rigidbody.velocity = Vector2.zero;
         transform.position = Vector2.zero;
 
+        yield return waitForUser();
         Invoke(nameof(SetRandomTrajectory), 1f);
+    }
+
+    private IEnumerator waitForUser()
+    {
+        bool done = false;
+        while(!done)
+        {
+            if(Input.anyKey)
+            {
+                done = true;
+            }
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -47,8 +64,17 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Out of Bounds") {
-            ResetBall();
+            StartCoroutine(ResetBall());
+            GameManager.Instance.Lives -= 1;
         }
+
+        if (collision.gameObject.CompareTag("Brick"))
+        {
+            Destroy(collision.gameObject);
+            score += 10;
+            GameManager.Instance.Score = score;
+        }
+
     }
 
 }
