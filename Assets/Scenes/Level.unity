@@ -2159,8 +2159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.5, y: 232}
-  m_SizeDelta: {x: 1127, y: 50}
+  m_AnchoredPosition: {x: -0.274, y: 230.6554}
+  m_SizeDelta: {x: 1036.9089, y: 52.6893}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1845509320
 GameObject:
@@ -2198,6 +2198,7 @@ MonoBehaviour:
   scoreText: {fileID: 1608826080}
   levelText: {fileID: 1550496068}
   livesText: {fileID: 1089159353}
+  CC: 0
   size: {x: 16, y: 6}
   offset: {x: 1.5, y: 0.6}
   brickPrefab: {fileID: 8400873179315365366, guid: 1ddb78e089a75f94abc55245c051398d, type: 3}
