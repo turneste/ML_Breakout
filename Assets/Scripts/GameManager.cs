@@ -23,9 +23,23 @@ public class GameManager : MonoBehaviour
 
     public Vector2Int size;
     public Vector2 offset;
-    public GameObject brickPrefab;
-    Color[] blockColour = {Color.blue, Color.green, Color.yellow, 
-        new Color(0.7f, 0.47f, 0.19f), new Color(0.81f, 0.52f, 0.22f), Color.red};
+
+    // Bricks
+    public GameObject blueBrick;
+    public GameObject greenBrick;
+    public GameObject yellowBrick;
+    public GameObject goldBrick;
+    public GameObject orangeBrick;
+    public GameObject redBrick;
+
+    //**************No longer needed
+    //public GameObject brickPrefab;
+
+    //Color[] blockColour = {Color.blue, Color.green, Color.yellow, 
+    //    new Color(0.7f, 0.47f, 0.19f), new Color(0.81f, 0.52f, 0.22f), Color.red};
+
+    //******************
+
 
     private int score;
     public int Score
@@ -70,16 +84,30 @@ public class GameManager : MonoBehaviour
 
     public void GenerateLevel()
     {
-        for (int i = 0; i < size.x; i++)
-        {
+        GameObject[] bricks = {blueBrick, greenBrick, yellowBrick, goldBrick, orangeBrick, redBrick};
 
-            for (int j = 0; j < size.y; j++)
+        // Starting position
+        float positionX = -15.1f;
+
+        float y = 0.0f;
+        // Rows
+        for (int i = 0; i < 6; i++)
+        {
+            float x = positionX;
+
+            // Columns
+            for (int j = 0; j < 18; j++)
             {
-                GameObject newBrick = Instantiate(brickPrefab, transform);
-                newBrick.transform.position = transform.position + new Vector3((float)((size.x - 1) * 0.5f - i)*offset.x, j * offset.y, 0);
-                newBrick.GetComponent<SpriteRenderer>().color = blockColour[j];
+                
+                GameObject newBrick = Instantiate(bricks[i], transform);
+                newBrick.transform.position = transform.position + new Vector3(x, y, 0.0f);
+                x += newBrick.GetComponent<BoxCollider2D>().size.x * .05f;
+
+                // newBrick.transform.position = transform.position + new Vector3((float)((size.x - 1) * 0.5f - i)*offset.x, j * offset.y, 0);
+                // newBrick.GetComponent<SpriteRenderer>().color = blockColour[j];
                 // newBrick.hits = 6 - i;
             }
+            y += blueBrick.GetComponent<BoxCollider2D>().size.y * .03f;
         }
     }
 
