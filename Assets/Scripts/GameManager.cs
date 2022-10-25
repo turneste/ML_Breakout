@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     public int Level
     {
         get { return level; }
-        set { level = value; levelText.text = "Level " + level; }
+        set { level = value; levelText.text = "Level: " + level; }
     }
 
     private void NewGame()
@@ -178,6 +178,12 @@ public class GameManager : MonoBehaviour
     {
         UnityEngine.Debug.Log("QUIT");
         UnityEngine.Application.Quit();
+    }
+
+    // Game Manager is global and needs to persist during each scene
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
     }
 
 }
