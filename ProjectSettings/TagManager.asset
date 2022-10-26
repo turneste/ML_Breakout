@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Out of Bounds
   - Brick
+  - All Bricks
+  - Paddle
+  - Ball
   layers:
   - Default
   - TransparentFX

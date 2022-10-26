@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
-    public GameObject ballPrefab;
-    public GameObject playerPrefab;
     public GameObject panelGameOver;
     public GameObject panelContinue;
     public TextMeshProUGUI scoreText;
@@ -18,28 +16,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI livesText;
     public int CC;
 
-    GameObject ball;
-    GameObject player;
 
-    public Vector2Int size;
-    public Vector2 offset;
-
-    // Bricks
-    public GameObject blueBrick;
-    public GameObject greenBrick;
-    public GameObject yellowBrick;
-    public GameObject goldBrick;
-    public GameObject orangeBrick;
-    public GameObject redBrick;
-
-    //**************No longer needed
-    //public GameObject brickPrefab;
-
-    //Color[] blockColour = {Color.blue, Color.green, Color.yellow, 
-    //    new Color(0.7f, 0.47f, 0.19f), new Color(0.81f, 0.52f, 0.22f), Color.red};
-
-    //******************
-
+    private int maxScoreLevel1 = 432;
+    private int maxScoreLevel2 = 864;
 
     private int score;
     public int Score
@@ -62,128 +41,114 @@ public class GameManager : MonoBehaviour
         set { level = value; levelText.text = "Level: " + level; }
     }
 
+    
+    /// <summary>
+    /// Unity function - called automatically when script initialized
+    /// Game Manager is global and needs to persist during each scene
+    /// </summary>
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
+    /// <summary>
+    /// First function called after Awake() before the first frame update
+    /// Loads level 1
+    /// </summary>
+    private void Start()
+    {      
+        panelGameOver.SetActive(false);
+        panelContinue.SetActive(false);
+        Instance = this;
+        NewGame();
+    }
+
+    /// <summary>
+    /// Begins a new game and loads level 1
+    /// </summary>
     private void NewGame()
     {
         panelGameOver.SetActive(false);
         Score = 0;
-        Lives = 3;
+        Lives = 1;
         Level = 1;
-
-        LoadLevel(Level);
     }
 
-    public void LoadLevel(int level)
-    {
-        GenerateLevel();
-        player = Instantiate(playerPrefab);
-        ball = Instantiate(ballPrefab);
-        scoreText.enabled = true;
-        levelText.enabled = true;
-        livesText.enabled = true;
-    }
 
-    public void GenerateLevel()
-    {
-        GameObject[] bricks = {blueBrick, greenBrick, yellowBrick, goldBrick, orangeBrick, redBrick};
-
-        // Starting position
-        float positionX = -15.1f;
-
-        float y = 0.0f;
-        // Rows
-        for (int i = 0; i < 6; i++)
-        {
-            float x = positionX;
-
-            // Columns
-            for (int j = 0; j < 18; j++)
-            {
-                
-                GameObject newBrick = Instantiate(bricks[i], transform);
-                newBrick.transform.position = transform.position + new Vector3(x, y, 0.0f);
-                x += newBrick.GetComponent<BoxCollider2D>().size.x * .05f;
-
-                // newBrick.transform.position = transform.position + new Vector3((float)((size.x - 1) * 0.5f - i)*offset.x, j * offset.y, 0);
-                // newBrick.GetComponent<SpriteRenderer>().color = blockColour[j];
-                // newBrick.hits = 6 - i;
-            }
-            y += blueBrick.GetComponent<BoxCollider2D>().size.y * .03f;
-        }
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        panelGameOver.SetActive(false);
-        panelContinue.SetActive(false);
-        scoreText.enabled = false;
-        levelText.enabled = false;
-        livesText.enabled = false;
-        Instance = this;
-        CC = 1;
-        NewGame();
-    }
-
-    // Update is called once per frame
+    /// <summary>
+    /// Check if the player has lost or won
+    /// Called once per frame
+    /// </summary>
     void Update()
     {
+        // Test level
+        bool testLevel = true;
+        if (testLevel) {
+            maxScoreLevel1 = 14;
+            maxScoreLevel2 = 28;
+        }
+
+        // Player is out of lives and has lost
         if (lives <= 0)
         {
             GameOver();
         }
 
-        if(GameObject.FindGameObjectsWithTag("Brick").Length == 0 && CC == 1)
+        // All Bricks have been cleared frist round
+        else if(score == maxScoreLevel1 && level == 1)
         {
-            CC = 0;
             Cleared();
         }
+
+        else if(score == maxScoreLevel2 && level == 2)
+        {
+            GameOver();
+        }
+
     }
 
+    /// <summary>
+    /// Player has lost
+    /// Destroy all bricks and display game over menu
+    /// </summary>
     private void GameOver()
     {
-        CC = 0;
-        Destroy(player);
-        Destroy(ball);
+        FindObjectOfType<Paddle>().GetComponent<SpriteRenderer>().enabled = false;
+        FindObjectOfType<Ball>().GetComponent<SpriteRenderer>().enabled = false;
+
         GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
         foreach(GameObject brick in bricks)
         {
-            GameObject.Destroy(brick);
+            brick.GetComponent<SpriteRenderer>().enabled = false;
         }
         panelGameOver.SetActive(true);
     }
 
+    /// <summary>
+    /// Resets bricks paddle and ball after first level of bricks is destroyed
+    /// </summary>
     private void Cleared()
     {
-        if( CC != 0)
-        {
-            Destroy(player);
-            Destroy(ball);
-            panelContinue.SetActive(true);
-            Level += 1;
-        }
-    }
+        Level += 1;
 
-    public void ResetLevel()
-    {
-        NewGame();
-    }
+        // Reload ball, bricks, and paddle
+        FindObjectOfType<Paddle>().ResetPaddle();
+        StartCoroutine(FindObjectOfType<Ball>().ResetBall());
 
-    public void NextLevel()
-    {
-        CC = 1;
-        LoadLevel(Level);
+        GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
+        foreach(GameObject brick in bricks)
+            {
+                // Unhide Brick
+                brick.GetComponent<SpriteRenderer>().enabled = true;
+                brick.GetComponent<BoxCollider2D>().enabled = true;
+            }
     }
 
     public void QuitGame()
     {
         UnityEngine.Debug.Log("QUIT");
         UnityEngine.Application.Quit();
-    }
-
-    // Game Manager is global and needs to persist during each scene
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
     }
 
 }
