@@ -19,28 +19,22 @@ public class GameIntroManager : MonoBehaviour
         set { difficulty = value; }
     }
 
-    public void loadField ()
+    public void LoadField ()
     {
         if (PlayerSelect == 1)
         {
-            SceneManager.LoadScene("Level");
+            SceneManager.LoadScene("OnePlayer");
+            DifficultySelect = 1;   // default to 1, but there is no purpose in 1 player mode.
         }
         if (PlayerSelect == 2)
         {
-            SceneManager.LoadScene("2PLevel");
+            SceneManager.LoadScene("TwoPlayer");
         }
     }
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void QuitGame()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UnityEngine.Debug.Log("QUIT");
+        UnityEngine.Application.Quit();
     }
 }

@@ -9,6 +9,12 @@ TagManager:
   - All Bricks
   - Paddle
   - Ball
+  - BrickUser
+  - BrickAgent
+  - BallAgent
+  - BallUser
+  - PaddleUser
+  - PaddleAgent
   layers:
   - Default
   - TransparentFX

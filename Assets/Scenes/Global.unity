@@ -328,7 +328,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 269024238}
         m_TargetAssemblyTypeName: GameIntroManager, Assembly-CSharp
-        m_MethodName: loadField
+        m_MethodName: LoadField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -780,7 +780,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 269024238}
         m_TargetAssemblyTypeName: GameIntroManager, Assembly-CSharp
-        m_MethodName: loadField
+        m_MethodName: LoadField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1775,7 +1775,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 269024238}
         m_TargetAssemblyTypeName: GameIntroManager, Assembly-CSharp
-        m_MethodName: loadField
+        m_MethodName: LoadField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2689,7 +2689,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 269024238}
         m_TargetAssemblyTypeName: GameIntroManager, Assembly-CSharp
-        m_MethodName: loadField
+        m_MethodName: LoadField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2956,8 +2956,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 269024238}
+        m_TargetAssemblyTypeName: GameIntroManager, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:

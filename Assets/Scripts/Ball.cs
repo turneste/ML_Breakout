@@ -66,12 +66,21 @@ public class Ball : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        // Out of bounds (both user and agent)
         if (collision.gameObject.tag == "Out of Bounds") {
             StartCoroutine(ResetBall());
-            GameManager.Instance.Lives -= 1;
+            if (this.tag == "BallUser")
+            {
+                GameManager.Instance.LivesUser -= 1;
+            }
+            else if (this.tag == "BallAgent")
+            {
+                GameManager.Instance.LivesAgent -= 1;
+            }    
         }
 
-        if (collision.gameObject.CompareTag("Brick"))
+        // User Brick Collisions
+        if (collision.gameObject.CompareTag("BrickUser"))
         {
             // Hide brick
             collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -86,7 +95,31 @@ public class Ball : MonoBehaviour
                 score += 7;
             }
 
-            GameManager.Instance.Score = score;
+            GameManager.Instance.ScoreUser = score;
+        }
+
+        // Agent Brick Collisions
+        else if (collision.gameObject.CompareTag("BrickAgent"))
+        {
+            // Hide brick
+            collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+
+            // Brick score based on color
+            if (collision.gameObject.name == "blueBrick" || collision.gameObject.name == "greenBrick")
+            {
+                score += 1;
+            }
+            else if (collision.gameObject.name == "yellowBrick" || collision.gameObject.name == "goldBrick")
+            {
+                score += 4;
+            }
+            else if (collision.gameObject.name == "orangeBrick" || collision.gameObject.name == "redBrick")
+            {
+                score += 7;
+            }
+
+            GameManager.Instance.ScoreAgent = score;
         }
 
     }
