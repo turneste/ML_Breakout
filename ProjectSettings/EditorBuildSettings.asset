@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Global.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Test Level.unity
-    guid: ebb6a09dd427be1498eccce88c056523
+    path: Assets/Scenes/OnePlayer.unity
+    guid: 869f66a1cec546542af6ac97f68d0802
+  - enabled: 1
+    path: Assets/Scenes/TwoPlayer.unity
+    guid: 876701fb7d7c61347ab4e5ec16d874cb
   m_configObjects: {}
