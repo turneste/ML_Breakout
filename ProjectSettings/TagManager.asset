@@ -15,6 +15,7 @@ TagManager:
   - BallUser
   - PaddleUser
   - PaddleAgent
+  - Ceiling
   layers:
   - Default
   - TransparentFX

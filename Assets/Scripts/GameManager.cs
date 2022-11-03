@@ -127,12 +127,12 @@ public class GameManager : MonoBehaviour
     {
         panelGameOver.SetActive(false);
         ScoreUser = 0;
-        LivesUser = 3;
+        LivesUser = 999;
         LevelUser = 1;
 
         // Agent's values will be set regardless of mode (won't be used in 1 player)
         ScoreAgent = 0;
-        LivesAgent = 3;
+        LivesAgent = 999;
         LevelAgent = 1;
 
         if (PLAYER_MODE == 2)

@@ -54,7 +54,7 @@ public class Ball : MonoBehaviour
     private void SetRandomTrajectory()
     {
         Vector2 force = new Vector2();
-        force.x = Random.Range(-1f, 1f);
+        force.x = Random.Range(-0.5f, 0.5f);
         force.y = -1f;
 
         rigidbody.AddForce(force.normalized * speed);
