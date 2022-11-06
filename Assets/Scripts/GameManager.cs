@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI levelTextAgent;
     public TextMeshProUGUI livesTextUser;
     public TextMeshProUGUI livesTextAgent;
-    public int CC;
 
     private int maxScoreLevel1 = 432;   // 192 if two player
     private int maxScoreLevel2 = 864;   // 384 if two player
@@ -149,14 +148,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        // Test level
-        bool testlevel = false;
-        if (testlevel)
-        {
-            maxScoreLevel1 = 14;
-            maxScoreLevel2 = 28;
-        }
-
         // Player is out of lives and has lost
         if (livesUser <= 0)
         {
@@ -185,7 +176,18 @@ public class GameManager : MonoBehaviour
 
         if (PLAYER_MODE == 2)
         {
-            if (livesAgent <= 0)
+            // Set for training purposes. Continuously reload bricks
+            bool training = true;
+            if (training) {
+                if (scoreAgent % maxScoreLevel1 == 0) {
+                    LevelAgent = 2;
+                    Cleared();
+                    AGENT_RESET = true;
+                }
+            }
+
+
+            else if (livesAgent <= 0)
             {
                 PLAYER_WON = true;
                 GameOver();
@@ -232,7 +234,7 @@ public class GameManager : MonoBehaviour
             brick.GetComponent<SpriteRenderer>().enabled = false;
         }
 
-        // Repeate for agent if applicable
+        // Repeat for agent if applicable
         if (PLAYER_MODE == 2)
         {
             GameObject paddleAgent = GameObject.FindGameObjectWithTag("PaddleAgent");
@@ -284,7 +286,8 @@ public class GameManager : MonoBehaviour
             PLAYER_RESET = false;
         }
 
-        if (AGENT_RESET && LevelAgent == 2)
+  
+        if ((AGENT_RESET && LevelAgent == 2))
         {
             // Reload ball, bricks, and paddle
             //GameObject.FindGameObjectWithTag("PaddleAgent").GetComponent<Paddle>().ResetPaddle();
