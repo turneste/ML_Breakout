@@ -37,15 +37,7 @@ public class Ball : MonoBehaviour
 
     private IEnumerator waitForUser()
     {
-        bool done = false;
-        while(!done)
-        {
-            if(Input.anyKey)
-            {
-                done = true;
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(1.0f);
     }
 
     /// <summary>
@@ -62,7 +54,16 @@ public class Ball : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Check if ball is stuck going in one direction
+        // Set new trajectory
+        if (rigidbody.velocity.y == 0) {
+            rigidbody.velocity = new Vector2 (rigidbody.velocity.x, speed);
+        } else if (rigidbody.velocity.x == 0) {
+            rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
+        }
+
         rigidbody.velocity = rigidbody.velocity.normalized * speed;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
