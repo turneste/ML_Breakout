@@ -1,0 +1,29 @@
+{
+    "AgentPaddle": {
+        "checkpoints": [
+            {
+                "steps": 2395,
+                "file_path": "results\\New2\\AgentPaddle\\AgentPaddle-2395.onnx",
+                "reward": null,
+                "creation_time": 1668377248.9575639,
+                "auxillary_file_paths": [
+                    "results\\New2\\AgentPaddle\\AgentPaddle-2395.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2395,
+            "file_path": "results\\New2\\AgentPaddle.onnx",
+            "reward": null,
+            "creation_time": 1668377248.9575639,
+            "auxillary_file_paths": [
+                "results\\New2\\AgentPaddle\\AgentPaddle-2395.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

@@ -45,33 +45,4 @@ public class Paddle : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        /*
-
-        Ball ball = collision.gameObject.GetComponent<Ball>();
-
-        if (ball != null)
-        {
-            // Get positions of paddle and ball
-            Vector3 paddlePosition = this.transform.position;
-            Vector2 contactPoint = collision.GetContact(0).point;
-
-            // Get position from middle of paddle
-            float offset = paddlePosition.x - contactPoint.x;
-            // Get position from middle of ball
-            float width = collision.otherCollider.bounds.size.x / 2;
-
-            // Find angle from velocity
-            float currentAngle = Vector2.SignedAngle(Vector2.up, ball.rigidbody.velocity);
-
-
-            float bounceAngle = (offset / width) * this.maxBounceAngle;
-            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -this.maxBounceAngle, this.maxBounceAngle);
-
-            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
-            ball.rigidbody.velocity = rotation * Vector2.up * ball.rigidbody.velocity.magnitude;
-        }
-        */
-    }
 }

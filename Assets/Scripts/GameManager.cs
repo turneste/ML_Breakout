@@ -22,12 +22,17 @@ public class GameManager : MonoBehaviour
     private int maxScoreLevel2 = 864;   // 384 if two player
 
     // Game Settings
-    private int DIFFICULTY = GameIntroManager.DifficultySelect;
-    private int PLAYER_MODE = GameIntroManager.PlayerSelect;
+    //private int DIFFICULTY = GameIntroManager.DifficultySelect;
+    //private int PLAYER_MODE = GameIntroManager.PlayerSelect;
+    private int PLAYER_MODE = 2;
     private bool PLAYER_WON = false;
     private bool AGENT_WON = false;
     private bool PLAYER_RESET = true;  // If false, bricks won't be able to reset
     private bool AGENT_RESET = true;
+
+    // For training purposes only
+    private bool training = true;
+    private int agentScoreFlag = 0;
 
     // User Player Info Set-up
     private int scoreUser;
@@ -96,6 +101,13 @@ public class GameManager : MonoBehaviour
     }
     // END Agent Player Info
 
+    public void trainingEpisodeBegin() {
+        NewGame();
+        AGENT_RESET = true;
+        LevelAgent = 2;
+        Cleared();
+    }
+
 
     /// <summary>
     /// Unity function - called automatically when script initialized
@@ -112,7 +124,10 @@ public class GameManager : MonoBehaviour
     /// Loads level 1
     /// </summary>
     private void Start()
-    {      
+    {     
+        if (training) {
+            PLAYER_MODE = 2;
+        }
         panelGameOver.SetActive(false);
         panelContinue.SetActive(false);
         Instance = this;
@@ -126,12 +141,12 @@ public class GameManager : MonoBehaviour
     {
         panelGameOver.SetActive(false);
         ScoreUser = 0;
-        LivesUser = 999;
+        LivesUser = 3;
         LevelUser = 1;
 
         // Agent's values will be set regardless of mode (won't be used in 1 player)
         ScoreAgent = 0;
-        LivesAgent = 999;
+        LivesAgent = 3;
         LevelAgent = 1;
 
         if (PLAYER_MODE == 2)
@@ -174,20 +189,10 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (PLAYER_MODE == 2)
-        {
-            // Set for training purposes. Continuously reload bricks
-            bool training = true;
-            if (training) {
-                if (scoreAgent % maxScoreLevel1 == 0) {
-                    LevelAgent = 2;
-                    Cleared();
-                    AGENT_RESET = true;
-                }
-            }
+        if (PLAYER_MODE == 2 && !training)
+        {       
 
-
-            else if (livesAgent <= 0)
+            if (livesAgent <= 0)
             {
                 PLAYER_WON = true;
                 GameOver();
