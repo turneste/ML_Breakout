@@ -7,35 +7,67 @@ using Unity.MLAgents.Actuators;
 
 public class PaddleAgent : Agent
 {
-    public int agentScoreFlag = 0;
-    public int livesFlag = 0;
     public Transform BallAgent;
     public Vector2 direction { get; private set; }
     Rigidbody2D paddleBody;
     float speed = 30f;
     public int currentScore;
+    public int currentLives;
+    public int checkScore;
+    public int checkLives;
+    public Vector2 startPosition;
+
+    public override void Initialize()
+    {
+        startPosition = this.transform.localPosition;
+    }
+
 
     public void ResetPaddle()
     {
-        this.transform.position = new Vector2(8.75f, this.transform.position.y);
+        this.transform.localPosition = startPosition;
         this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public override void OnEpisodeBegin()
     {
-        GameManager.Instance.trainingEpisodeBegin();
+        // Reset Ball
+        StartCoroutine(transform.parent.gameObject.GetComponentInChildren<Ball>().ResetBall());
+
+        // Reset Bricks
+        Transform allBricks = transform.parent.GetChild(0);
+        for (int row=0; row<6; row++) {
+            Transform brickRow = allBricks.GetChild(row);
+            for (int brick=0; brick<8; brick++) {
+                brickRow.GetChild(brick).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                brickRow.GetChild(brick).gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+
+        // Reset Paddle
         ResetPaddle();
         paddleBody = this.GetComponent<Rigidbody2D>();
-        currentScore = GameManager.Instance.ScoreAgent;
+
+        // Reset lives & Score
+        currentScore = 0;
+        currentLives = 3;
+
+        checkScore = 0;
+        checkLives = 3;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Ball position
-        sensor.AddObservation(BallAgent.transform.position);
+        sensor.AddObservation(BallAgent.transform.localPosition.x);
+        sensor.AddObservation(BallAgent.transform.localPosition.y);
 
         // Paddle position
-        sensor.AddObservation(this.transform.position);
+        sensor.AddObservation(this.transform.localPosition.x);
+
+        // Ball velocity
+        sensor.AddObservation(BallAgent.GetComponent<Rigidbody2D>().velocity.x);
+        sensor.AddObservation(BallAgent.GetComponent<Rigidbody2D>().velocity.y);
 
     }
 
@@ -58,46 +90,44 @@ public class PaddleAgent : Agent
         if (moveX == 1) { this.direction = Vector2.left; }
         if (moveX == 2) { this.direction = Vector2.right; }
         
-        float distanceToBall = Vector2.Distance(this.transform.position, BallAgent.transform.position);
-        
+        float distanceToBall = Vector2.Distance(this.transform.localPosition, BallAgent.transform.localPosition);
         
         // Small reward for being close to the ball
-        if (distanceToBall < this.GetComponent<BoxCollider2D>().size.x/2 && BallAgent.transform.position.y > -8f)
+        if (distanceToBall < 1f)
+        //if (distanceToBall < this.GetComponent<BoxCollider2D>().size.x/2 && BallAgent.transform.position.y > -8f)
         {
-            SetReward(.5f);
-        }
-        
-        
+            SetReward(.01f);
+        }        
 
         // Large penalty for going out of bounds
-        if (BallAgent.transform.position.y < -8f)
+        if (currentLives < checkLives)
         {
-            SetReward(-0.25f);
-            Debug.Log(GameManager.Instance.LivesAgent);
-            if (GameManager.Instance.LivesAgent == 0) {
+            SetReward(-.05f);
+            checkLives = currentLives;
+
+            if (checkLives == 0) {
                 EndEpisode();
             }
         }
 
-        // Large Reward for breaking brick - 280 total per level
-        if (currentScore < GameManager.Instance.ScoreAgent) {
-            SetReward(0.25f);
+        // Large Reward for breaking bricks
+        if (currentScore > checkScore) {
+            checkScore = currentScore;
+            SetReward(.1f);
         }
 
-        if (GameManager.Instance.ScoreAgent % 192 == 0 && GameManager.Instance.ScoreAgent != agentScoreFlag) {
-            Debug.Log("LEVEL CLEAR" + GameManager.Instance.ScoreAgent);
-            agentScoreFlag = GameManager.Instance.ScoreAgent;
-            SetReward(0.5f);
+        if (currentScore % 192 == 0 && currentScore != 0) {
+            Debug.Log("LEVEL CLEAR" + currentScore);
             EndEpisode();
         }
 
     }
-    public void OnCollision(Collision collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         // Small reward for hitting ball
         if(collision.gameObject.tag == "BallAgent")
         {
-            SetReward(0.25f);
+            SetReward(.25f);
         }
     }
 

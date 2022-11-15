@@ -5,6 +5,7 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
+    public bool training = true;
     public new Rigidbody2D rigidbody { get; private set; }
     public float speed = 10f;
 
@@ -65,7 +66,11 @@ public class Ball : MonoBehaviour
             }
             else if (this.tag == "BallAgent")
             {
-                GameManager.Instance.LivesAgent -= 1;
+                if (!training) {
+                    GameManager.Instance.LivesAgent -= 1;
+                } else {
+                    transform.parent.gameObject.GetComponentInChildren<PaddleAgent>().currentLives -= 1;
+                }
             }    
         }
 
@@ -95,22 +100,31 @@ public class Ball : MonoBehaviour
             collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
+            int score = 0;
+
             // Brick score based on color
             if (collision.gameObject.name == "blueBrick" || collision.gameObject.name == "greenBrick")
             {
-                GameManager.Instance.ScoreAgent += 1;
+                score = 1;
             }
             else if (collision.gameObject.name == "yellowBrick" || collision.gameObject.name == "goldBrick")
             {
-                GameManager.Instance.ScoreAgent += 4;
+                score = 4;
             }
             else if (collision.gameObject.name == "orangeBrick" || collision.gameObject.name == "redBrick")
             {
-                GameManager.Instance.ScoreAgent += 7;
+                score = 7;
+            }
+
+            if (!training) {
+                GameManager.Instance.ScoreAgent += score;
+            } else {
+                transform.parent.gameObject.GetComponentInChildren<PaddleAgent>().currentScore  += score;
             }
 
         }
 
+        
         else if (collision.gameObject.CompareTag("PaddleAgent") || collision.gameObject.CompareTag("PaddleUser")) 
         {
             float maxBounceAngle = 75f;
@@ -136,15 +150,14 @@ public class Ball : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
             ball.GetComponent<Rigidbody2D>().velocity = rotation * Vector2.up * ball.GetComponent<Rigidbody2D>().velocity.magnitude;
         }
+        
 
         else if (collision.gameObject.CompareTag("Wall")) {
             // Check if ball is stuck going in one direction
             // Set new trajectory
             if (rigidbody.velocity.y == 0) {
                 rigidbody.velocity = new Vector2 (rigidbody.velocity.x, speed);
-                Debug.Log("y is 0");
             } else if (rigidbody.velocity.x == 0) {
-                Debug.Log("x is 0");
                 rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
             }
         }

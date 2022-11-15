@@ -8703,9 +8703,11 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   agentScoreFlag: 0
-  livesFlag: 0
+  leftWall: {fileID: 2058287268237811598}
+  rightWall: {fileID: 2058287268237811597}
   BallAgent: {fileID: 967132100}
   currentScore: 0
+  currentLives: 0
 --- !u!114 &1768074626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8719,8 +8721,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 8
-    NumStackedVectorObservations: 2
+    VectorObservationSize: 7
+    NumStackedVectorObservations: 4
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 03000000
@@ -11275,6 +11277,16 @@ PrefabInstance:
 --- !u!4 &2058287268237811596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2058287266458982377, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
+  m_PrefabInstance: {fileID: 2058287268237811595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2058287268237811597 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2058287266622612345, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
+  m_PrefabInstance: {fileID: 2058287268237811595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2058287268237811598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2058287268237004663, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
   m_PrefabInstance: {fileID: 2058287268237811595}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3961305475868594689

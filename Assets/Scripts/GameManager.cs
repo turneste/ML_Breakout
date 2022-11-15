@@ -22,17 +22,12 @@ public class GameManager : MonoBehaviour
     private int maxScoreLevel2 = 864;   // 384 if two player
 
     // Game Settings
-    //private int DIFFICULTY = GameIntroManager.DifficultySelect;
-    //private int PLAYER_MODE = GameIntroManager.PlayerSelect;
-    private int PLAYER_MODE = 2;
+    private int DIFFICULTY = GameIntroManager.DifficultySelect;
+    private int PLAYER_MODE = GameIntroManager.PlayerSelect;
     private bool PLAYER_WON = false;
     private bool AGENT_WON = false;
     private bool PLAYER_RESET = true;  // If false, bricks won't be able to reset
     private bool AGENT_RESET = true;
-
-    // For training purposes only
-    private bool training = true;
-    private int agentScoreFlag = 0;
 
     // User Player Info Set-up
     private int scoreUser;
@@ -101,14 +96,6 @@ public class GameManager : MonoBehaviour
     }
     // END Agent Player Info
 
-    public void trainingEpisodeBegin() {
-        NewGame();
-        AGENT_RESET = true;
-        LevelAgent = 2;
-        Cleared();
-    }
-
-
     /// <summary>
     /// Unity function - called automatically when script initialized
     /// Game Manager is global and needs to persist during each scene
@@ -125,9 +112,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {     
-        if (training) {
-            PLAYER_MODE = 2;
-        }
         panelGameOver.SetActive(false);
         panelContinue.SetActive(false);
         Instance = this;
@@ -189,7 +173,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (PLAYER_MODE == 2 && !training)
+        if (PLAYER_MODE == 2)
         {       
 
             if (livesAgent <= 0)

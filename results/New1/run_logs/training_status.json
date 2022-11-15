@@ -2,22 +2,49 @@
     "AgentPaddle": {
         "checkpoints": [
             {
-                "steps": 609,
-                "file_path": "results\\New1\\AgentPaddle\\AgentPaddle-609.onnx",
+                "steps": 499985,
+                "file_path": "results\\New1\\AgentPaddle\\AgentPaddle-499985.onnx",
                 "reward": null,
-                "creation_time": 1668376910.8581786,
+                "creation_time": 1668478773.2587118,
                 "auxillary_file_paths": [
-                    "results\\New1\\AgentPaddle\\AgentPaddle-609.pt"
+                    "results\\New1\\AgentPaddle\\AgentPaddle-499985.pt"
+                ]
+            },
+            {
+                "steps": 538712,
+                "file_path": "results\\New1\\AgentPaddle\\AgentPaddle-538712.onnx",
+                "reward": null,
+                "creation_time": 1668479068.71893,
+                "auxillary_file_paths": [
+                    "results\\New1\\AgentPaddle\\AgentPaddle-538712.pt"
+                ]
+            },
+            {
+                "steps": 560128,
+                "file_path": "results\\New1\\AgentPaddle\\AgentPaddle-560128.onnx",
+                "reward": null,
+                "creation_time": 1668479753.4074998,
+                "auxillary_file_paths": [
+                    "results\\New1\\AgentPaddle\\AgentPaddle-560128.pt"
+                ]
+            },
+            {
+                "steps": 567755,
+                "file_path": "results\\New1\\AgentPaddle\\AgentPaddle-567755.onnx",
+                "reward": null,
+                "creation_time": 1668479980.1224585,
+                "auxillary_file_paths": [
+                    "results\\New1\\AgentPaddle\\AgentPaddle-567755.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 609,
+            "steps": 567755,
             "file_path": "results\\New1\\AgentPaddle.onnx",
             "reward": null,
-            "creation_time": 1668376910.8581786,
+            "creation_time": 1668479980.1224585,
             "auxillary_file_paths": [
-                "results\\New1\\AgentPaddle\\AgentPaddle-609.pt"
+                "results\\New1\\AgentPaddle\\AgentPaddle-567755.pt"
             ]
         }
     },
