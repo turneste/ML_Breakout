@@ -137,7 +137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1925129435915241042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 8, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4603,8 +4603,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 5
-    NumStackedVectorObservations: 2
+    VectorObservationSize: 7
+    NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 03000000
@@ -4636,7 +4636,9 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  BallAgent: {fileID: 5558616233177949685}
+  BallAgent: {fileID: 5558616233177949684}
+  leftWall: {fileID: 1925129436652461423}
+  rightWall: {fileID: 1925129435915241042}
   currentScore: 0
   currentLives: 0
   checkScore: 0
