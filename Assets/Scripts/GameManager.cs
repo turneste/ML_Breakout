@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameObject panelGameOver;
+    public GameObject panelPlayerWon;
     public GameObject panelContinue;
     public GameObject panelPause;
     public TextMeshProUGUI scoreTextUser;
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {      
         panelGameOver.SetActive(false);
+        panelPlayerWon.SetActive(false);
         panelContinue.SetActive(false);
         panelPause.SetActive(false);
         Instance = this;
@@ -155,14 +157,22 @@ public class GameManager : MonoBehaviour
         // Pause/Exit functionality
         if (Input.GetKey ("p"))
         {
-            Time.timeScale = 0;
-            panelPause.SetActive(true);
+            // Disable pause/resume if at end of game
+            if (PLAYER_WON == false && AGENT_WON == false)
+            {
+                Time.timeScale = 0;
+                panelPause.SetActive(true);
+            }
         }
 
         else if (Input.GetKey ("r"))
         {
-            Time.timeScale = 1;
-            panelPause.SetActive(false);
+            // Disable pause/resume if at end of game
+            if (PLAYER_WON == false && AGENT_WON == false)
+            {
+                Time.timeScale = 1;
+                panelPause.SetActive(false);
+            }
         }
 
         if (Input.GetKey ("escape"))
@@ -275,15 +285,18 @@ public class GameManager : MonoBehaviour
 
         if (PLAYER_WON)
         {
-            // do something
+            panelPlayerWon.SetActive(true);
         }
 
         else if (AGENT_WON)
         {
-            // do somethign
+            panelGameOver.SetActive(true);
         }
-        
-        panelGameOver.SetActive(true);
+
+        else
+        {
+            panelGameOver.SetActive(true);
+        }
     }
 
     /// <summary>

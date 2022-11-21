@@ -1,8 +1,6 @@
 using UnityEngine.UI;
 using LootLocker.Requests;
 using UnityEngine;
-// using static System.Net.Mime.MediaTypeNames;
-//using static System.Net.Mime.MediaTypeNames;
 
 public class DisplayLeaderboard : MonoBehaviour
 {

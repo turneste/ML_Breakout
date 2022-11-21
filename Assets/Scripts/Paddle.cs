@@ -47,6 +47,9 @@ public class Paddle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // THIS WAS AN ATTEMPT AT ADVANCED/RANDOM TRAJECTORY ELEMENTS.
+        // THIS IS NOT YET FULLY FUNCTIONAL AND MAY REQUIRE RETRAINING
+        // THE NEURAL NET.
         //Ball ball = collision.gameObject.GetComponent<Ball>();
 
         //if (ball != null)
