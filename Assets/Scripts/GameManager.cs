@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI levelTextAgent;
     public TextMeshProUGUI livesTextUser;
     public TextMeshProUGUI livesTextAgent;
+    public int CC;
 
     private int maxScoreLevel1 = 432;   // 192 if two player
     private int maxScoreLevel2 = 864;   // 384 if two player
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
     }
     // END Agent Player Info
 
+
     /// <summary>
     /// Unity function - called automatically when script initialized
     /// Game Manager is global and needs to persist during each scene
@@ -114,7 +116,7 @@ public class GameManager : MonoBehaviour
     /// Loads level 1
     /// </summary>
     private void Start()
-    {     
+    {      
         panelGameOver.SetActive(false);
         panelPlayerWon.SetActive(false);
         panelContinue.SetActive(false);
@@ -216,8 +218,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (PLAYER_MODE == 2)
-        {       
-
+        {
             if (livesAgent <= 0)
             {
                 PLAYER_WON = true;
@@ -265,7 +266,7 @@ public class GameManager : MonoBehaviour
             brick.GetComponent<SpriteRenderer>().enabled = false;
         }
 
-        // Repeat for agent if applicable
+        // Repeate for agent if applicable
         if (PLAYER_MODE == 2)
         {
             GameObject paddleAgent = GameObject.FindGameObjectWithTag("PaddleAgent");
@@ -320,8 +321,7 @@ public class GameManager : MonoBehaviour
             PLAYER_RESET = false;
         }
 
-  
-        if ((AGENT_RESET && LevelAgent == 2))
+        if (AGENT_RESET && LevelAgent == 2)
         {
             // Reload ball, bricks, and paddle
             //GameObject.FindGameObjectWithTag("PaddleAgent").GetComponent<Paddle>().ResetPaddle();
