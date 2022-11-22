@@ -5,12 +5,11 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
+    public bool training = true;
     public new Rigidbody2D rigidbody { get; private set; }
     public float speed = 10f;
 
     public Vector2 startPosition;
-
-    int score = 0;
 
     private void Awake()
     {
@@ -37,15 +36,7 @@ public class Ball : MonoBehaviour
 
     private IEnumerator waitForUser()
     {
-        bool done = false;
-        while(!done)
-        {
-            if(Input.anyKey)
-            {
-                done = true;
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(1.0f);
     }
 
     /// <summary>
@@ -54,7 +45,7 @@ public class Ball : MonoBehaviour
     private void SetRandomTrajectory()
     {
         Vector2 force = new Vector2();
-        force.x = Random.Range(-1f, 1f);
+        force.x = Random.Range(-0.5f, 0.5f);
         force.y = -1f;
 
         rigidbody.AddForce(force.normalized * speed);
@@ -67,7 +58,7 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         // Out of bounds (both user and agent)
-        if (collision.gameObject.tag == "Out of Bounds") {
+        if (collision.gameObject.CompareTag("Out of Bounds")) {
             StartCoroutine(ResetBall());
             if (this.tag == "BallUser")
             {
@@ -75,12 +66,16 @@ public class Ball : MonoBehaviour
             }
             else if (this.tag == "BallAgent")
             {
-                GameManager.Instance.LivesAgent -= 1;
+                if (!training) {
+                    GameManager.Instance.LivesAgent -= 1;
+                } else {
+                    transform.parent.gameObject.GetComponentInChildren<PaddleAgent>().currentLives -= 1;
+                }
             }    
         }
 
         // User Brick Collisions
-        if (collision.gameObject.CompareTag("BrickUser"))
+        else if (collision.gameObject.CompareTag("BrickUser"))
         {
             // Hide brick
             collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -88,14 +83,14 @@ public class Ball : MonoBehaviour
 
             // Brick score based on color
             if (collision.gameObject.name == "blueBrick" || collision.gameObject.name == "greenBrick"){
-                score += 1;
+                GameManager.Instance.ScoreUser += 1;
             } else if (collision.gameObject.name == "yellowBrick" || collision.gameObject.name == "goldBrick"){
-                score += 4;
+                GameManager.Instance.ScoreUser += 4;
             } else if (collision.gameObject.name == "orangeBrick" || collision.gameObject.name == "redBrick"){
-                score += 7;
+                GameManager.Instance.ScoreUser += 7;
             }
 
-            GameManager.Instance.ScoreUser = score;
+
         }
 
         // Agent Brick Collisions
@@ -105,21 +100,66 @@ public class Ball : MonoBehaviour
             collision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
+            int score = 0;
+
             // Brick score based on color
             if (collision.gameObject.name == "blueBrick" || collision.gameObject.name == "greenBrick")
             {
-                score += 1;
+                score = 1;
             }
             else if (collision.gameObject.name == "yellowBrick" || collision.gameObject.name == "goldBrick")
             {
-                score += 4;
+                score = 4;
             }
             else if (collision.gameObject.name == "orangeBrick" || collision.gameObject.name == "redBrick")
             {
-                score += 7;
+                score = 7;
             }
 
-            GameManager.Instance.ScoreAgent = score;
+            if (!training) {
+                GameManager.Instance.ScoreAgent += score;
+            } else {
+                transform.parent.gameObject.GetComponentInChildren<PaddleAgent>().currentScore  += score;
+            }
+
+        }
+
+        
+        else if (collision.gameObject.CompareTag("PaddleAgent") || collision.gameObject.CompareTag("PaddleUser")) 
+        {
+            float maxBounceAngle = 75f;
+
+            Collider2D paddle = collision.collider;
+            Collider2D ball = collision.otherCollider;
+
+            // Get positions of paddle and ball
+            Vector3 paddlePosition = paddle.transform.position;
+            Vector2 contactPoint = collision.GetContact(0).point;
+
+            // Get position from middle of paddle
+            float offset = paddlePosition.x - contactPoint.x;
+            float width = paddle.bounds.size.x / 2;
+
+            // Find angle ball is moving relative to y axis
+            float currentAngle = Vector2.SignedAngle(Vector2.up, ball.GetComponent<Rigidbody2D>().velocity);
+
+            // Create new angle for ball
+            float bounceAngle = (offset / width) * maxBounceAngle;
+            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
+
+            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+            ball.GetComponent<Rigidbody2D>().velocity = rotation * Vector2.up * ball.GetComponent<Rigidbody2D>().velocity.magnitude;
+        }
+        
+
+        else if (collision.gameObject.CompareTag("Wall")) {
+            // Check if ball is stuck going in one direction
+            // Set new trajectory
+            if (rigidbody.velocity.y == 0) {
+                rigidbody.velocity = new Vector2 (rigidbody.velocity.x, speed);
+            } else if (rigidbody.velocity.x == 0) {
+                rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
+            }
         }
 
     }
