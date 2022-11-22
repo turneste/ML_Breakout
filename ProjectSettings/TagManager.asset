@@ -15,6 +15,7 @@ TagManager:
   - BallUser
   - PaddleUser
   - PaddleAgent
+  - ShowOnPause
   - Ceiling
   - Wall
   layers:
