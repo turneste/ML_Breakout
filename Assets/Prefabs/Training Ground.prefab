@@ -4484,11 +4484,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_Mass
-      value: 5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_LinearDrag
-      value: 0.25
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_GravityScale
@@ -4496,7 +4496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_CollisionDetection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709884, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_RootOrder
@@ -4613,7 +4613,7 @@ MonoBehaviour:
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: AgentPaddle
   TeamId: 0
@@ -4637,8 +4637,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   BallAgent: {fileID: 5558616233177949684}
-  leftWall: {fileID: 1925129436652461423}
-  rightWall: {fileID: 1925129435915241042}
+  speed: 30
   currentScore: 0
   currentLives: 0
   checkScore: 0

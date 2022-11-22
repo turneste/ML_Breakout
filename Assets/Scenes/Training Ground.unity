@@ -1039,6 +1039,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Training Ground (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1925129437240630812, guid: 27ceb2706023a734189c5c7cb067d74a, type: 3}
+      propertyPath: DecisionPeriod
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27ceb2706023a734189c5c7cb067d74a, type: 3}
 --- !u!1001 &705176118
