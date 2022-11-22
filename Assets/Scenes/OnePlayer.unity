@@ -7321,10 +7321,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1718617073}
     m_Modifications:
-    - target: {fileID: -2339678149083012966, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709872, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_Name
       value: PaddleUser
@@ -7334,12 +7330,8 @@ PrefabInstance:
       value: PaddleUser
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
-      propertyPath: m_Mass
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_LinearDrag
-      value: 5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709884, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_RootOrder
@@ -7392,37 +7384,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7903112906118709884, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
   m_PrefabInstance: {fileID: 1394003348}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1394003350 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7903112906118709872, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
-  m_PrefabInstance: {fileID: 1394003348}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1394003351
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394003350}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 0.5}
-    newSize: {x: 4, y: 0.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4, y: 0.5}
-  m_EdgeRadius: 0
 --- !u!1001 &1395114121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10661,6 +10622,7 @@ MonoBehaviour:
   levelTextAgent: {fileID: 0}
   livesTextUser: {fileID: 1089159353}
   livesTextAgent: {fileID: 0}
+  CC: 0
 --- !u!4 &1845509322
 Transform:
   m_ObjectHideFlags: 0
@@ -13096,10 +13058,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 16.9
       objectReference: {fileID: 0}
-    - target: {fileID: 2058287266622612346, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
     - target: {fileID: 2058287267247385805, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
       propertyPath: m_Size.x
       value: 35.515274
@@ -13115,14 +13073,6 @@ PrefabInstance:
     - target: {fileID: 2058287267247385806, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
       propertyPath: m_LocalPosition.y
       value: 7.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2058287267247385807, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 2058287268237004656, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
-      propertyPath: m_TagString
-      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 2058287268237004663, guid: 5d0f7f5ba7a2d9a47a79200f4537a9ec, type: 3}
       propertyPath: m_LocalScale.x

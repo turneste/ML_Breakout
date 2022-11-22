@@ -15,10 +15,7 @@ TagManager:
   - BallUser
   - PaddleUser
   - PaddleAgent
-  - Ceiling
-  - Wall
   - ShowOnPause
-
   layers:
   - Default
   - TransparentFX
