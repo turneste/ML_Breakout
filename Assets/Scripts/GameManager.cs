@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static System.Net.Mime.MediaTypeNames;
 using TMPro;
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     public GameObject panelGameOver;
+    public GameObject panelPlayerWon;
     public GameObject panelContinue;
+    public GameObject panelPause;
     public TextMeshProUGUI scoreTextUser;
     public TextMeshProUGUI scoreTextAgent;
     public TextMeshProUGUI levelTextUser;
@@ -113,7 +116,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {     
         panelGameOver.SetActive(false);
+        panelPlayerWon.SetActive(false);
         panelContinue.SetActive(false);
+        panelPause.SetActive(false);
         Instance = this;
         NewGame();
     }
@@ -147,6 +152,43 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        // Pause/Exit functionality
+        if (Input.GetKey ("p"))
+        {
+            // Disable pause/resume if at end of game
+            if (PLAYER_WON == false && AGENT_WON == false)
+            {
+                Time.timeScale = 0;
+                panelPause.SetActive(true);
+            }
+        }
+
+        else if (Input.GetKey ("r"))
+        {
+            // Disable pause/resume if at end of game
+            if (PLAYER_WON == false && AGENT_WON == false)
+            {
+                Time.timeScale = 1;
+                panelPause.SetActive(false);
+            }
+        }
+
+        if (Input.GetKey ("escape"))
+        {
+            Time.timeScale = 1;
+            Destroy(this.gameObject);
+            SceneManager.LoadScene("Global");
+        }
+
+        
+        // Test level
+        bool testlevel = false;
+        if (testlevel)
+        {
+            maxScoreLevel1 = 14;
+            maxScoreLevel2 = 28;
+        }
+
         // Player is out of lives and has lost
         if (livesUser <= 0)
         {
@@ -242,15 +284,18 @@ public class GameManager : MonoBehaviour
 
         if (PLAYER_WON)
         {
-            // do something
+            panelPlayerWon.SetActive(true);
         }
 
         else if (AGENT_WON)
         {
-            // do somethign
+            panelGameOver.SetActive(true);
         }
-        
-        panelGameOver.SetActive(true);
+
+        else
+        {
+            panelGameOver.SetActive(true);
+        }
     }
 
     /// <summary>
