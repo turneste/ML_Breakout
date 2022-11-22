@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     private bool PLAYER_RESET = true;  // If false, bricks won't be able to reset
     private bool AGENT_RESET = true;
 
+    public PaddleAgent AgentEASY;
+    public PaddleAgent AgentMED;
+    public PaddleAgent AgentHARD;
+
     // User Player Info Set-up
     private int scoreUser;
     public int ScoreUser
@@ -123,6 +127,17 @@ public class GameManager : MonoBehaviour
         panelPause.SetActive(false);
         Instance = this;
         NewGame();
+
+        if (PLAYER_MODE == 2) {
+            if (DIFFICULTY == 1) {
+                Instantiate(AgentEASY);
+            } else if (DIFFICULTY == 2) {
+                Instantiate(AgentMED);
+            } else if (DIFFICULTY == 3) {
+                Instantiate(AgentHARD);
+            }
+        }
+        
     }
 
     /// <summary>
@@ -183,14 +198,6 @@ public class GameManager : MonoBehaviour
         }
 
         
-        // Test level
-        bool testlevel = false;
-        if (testlevel)
-        {
-            maxScoreLevel1 = 14;
-            maxScoreLevel2 = 28;
-        }
-
         // Player is out of lives and has lost
         if (livesUser <= 0)
         {

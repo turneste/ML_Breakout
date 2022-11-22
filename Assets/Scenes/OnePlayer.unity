@@ -7331,7 +7331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709874, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_LinearDrag
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7903112906118709884, guid: 7d311380c1f6b514aa4aba870388b616, type: 3}
       propertyPath: m_RootOrder
@@ -10623,6 +10623,9 @@ MonoBehaviour:
   livesTextUser: {fileID: 1089159353}
   livesTextAgent: {fileID: 0}
   CC: 0
+  AgentEASY: {fileID: 0}
+  AgentMED: {fileID: 0}
+  AgentHARD: {fileID: 0}
 --- !u!4 &1845509322
 Transform:
   m_ObjectHideFlags: 0
