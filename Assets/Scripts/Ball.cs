@@ -31,21 +31,13 @@ public class Ball : MonoBehaviour
         this.rigidbody.velocity = Vector2.zero;
         this.transform.position = startPosition;
 
-        yield return waitForUser();
+        yield return waitSeconds();
         Invoke(nameof(SetRandomTrajectory), 1f);
     }
 
-    private IEnumerator waitForUser()
+    private IEnumerator waitSeconds()
     {
-        bool done = false;
-        while(!done)
-        {
-            if(Input.anyKey)
-            {
-                done = true;
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(1.0f);
     }
 
     /// <summary>
@@ -120,6 +112,43 @@ public class Ball : MonoBehaviour
             }
 
             GameManager.Instance.ScoreAgent = score;
+        }
+
+        else if (collision.gameObject.CompareTag("PaddleAgent") || collision.gameObject.CompareTag("PaddleUser")) 
+        {
+            float maxBounceAngle = 75f;
+
+            Collider2D paddle = collision.collider;
+            Collider2D ball = collision.otherCollider;
+
+            // Get positions of paddle and ball
+            Vector3 paddlePosition = paddle.transform.position;
+            Vector2 contactPoint = collision.GetContact(0).point;
+
+            // Get position from middle of paddle
+            float offset = paddlePosition.x - contactPoint.x;
+            float width = paddle.bounds.size.x / 2;
+
+            // Find angle ball is moving relative to y axis
+            float currentAngle = Vector2.SignedAngle(Vector2.up, ball.GetComponent<Rigidbody2D>().velocity);
+
+            // Create new angle for ball
+            float bounceAngle = (offset / width) * maxBounceAngle;
+            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
+
+            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+            ball.GetComponent<Rigidbody2D>().velocity = rotation * Vector2.up * ball.GetComponent<Rigidbody2D>().velocity.magnitude;
+        }
+        
+
+        else if (collision.gameObject.CompareTag("Wall")) {
+            // Check if ball is stuck going in one direction
+            // Set new trajectory
+            if (rigidbody.velocity.y == 0) {
+                rigidbody.velocity = new Vector2 (rigidbody.velocity.x, speed);
+            } else if (rigidbody.velocity.x == 0) {
+                rigidbody.velocity = new Vector2(speed, rigidbody.velocity.y);
+            }
         }
 
     }
