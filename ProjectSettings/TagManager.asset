@@ -17,8 +17,6 @@ TagManager:
   - PaddleAgent
   - Ceiling
   - Wall
-  - ShowOnPause
-
   layers:
   - Default
   - TransparentFX
