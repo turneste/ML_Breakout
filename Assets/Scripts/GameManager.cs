@@ -347,6 +347,25 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void RetryGame()
+    {
+        Destroy(this.gameObject);
+        if (GameIntroManager.PlayerSelect == 1)
+        {
+            SceneManager.LoadScene("OnePlayer");
+        }
+        if (GameIntroManager.PlayerSelect == 2)
+        {
+            SceneManager.LoadScene("TwoPlayer");
+        }
+    }
+
+    public void ReturnToMain()
+    {
+        Destroy(this.gameObject);
+        SceneManager.LoadScene("Global");
+    }
+
     public void QuitGame()
     {
         UnityEngine.Debug.Log("QUIT");

@@ -19,7 +19,7 @@ public class GameIntroManager : MonoBehaviour
         set { difficulty = value; }
     }
 
-    public void LoadField ()
+    public void LoadField()
     {
         if (PlayerSelect == 1)
         {
